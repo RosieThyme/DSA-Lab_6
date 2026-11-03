@@ -1,4 +1,5 @@
 #include "MaxHeap.h"
+#include <string>
 void MaxHeap::ResizeArray()
 {
 	int newAllocationSize = allocationSize * 2;
@@ -18,8 +19,8 @@ void MaxHeap::ResizeArray()
 
 MaxHeap::MaxHeap()
 {
+	heapArray = new App[allocationSize];
 	allocationSize = 1;
-	heapArray = new int[allocationSize];
 	heapSize = 0;
 
 }
@@ -27,7 +28,7 @@ void MaxHeap::PercolateUp(int nodeIndex)
 {
 	while (nodeIndex > 0)
 	{
-		int parentIndex  =(nodeIndex - 1)/2;
+		int parentIndex = (nodeIndex - 1)/2;
 		//max-heap property check
 		if (heapArray[nodeIndex] <= heapArray[parentIndex])
 		{
@@ -35,6 +36,7 @@ void MaxHeap::PercolateUp(int nodeIndex)
 		}
 		else
 		{
+			// swap the values
 			int temp = heapArray[nodeIndex];
 			heapArray[nodeIndex] = heapArray[parentIndex];
 			heapArray[parentIndex] = temp;
@@ -44,6 +46,7 @@ void MaxHeap::PercolateUp(int nodeIndex)
 }
 void MaxHeap::PercolateDown(int nodeIndex)
 {
+	// get child's index from array
 	int childIndex = 2 * nodeIndex + 1;
 	int value = heapArray[nodeIndex];
 	
@@ -78,7 +81,7 @@ void MaxHeap::PercolateDown(int nodeIndex)
 
 	}
 }
-void MaxHeap::Insert(int value)
+void MaxHeap::Insert(const std::string &name, const int &rating)
 {
 	//resize the value 
 	if (heapSize == allocationSize)
@@ -86,8 +89,8 @@ void MaxHeap::Insert(int value)
 		ResizeArray();
 	}
 
-	//Add value to the end of the array
-	heapArray[heapSize] = value;
+	//Add rating to the end of the array
+	heapArray[heapSize] = App(name, rating);
 	heapSize++;
 	
 	//percolate up from the last index
