@@ -3,10 +3,10 @@
 #include <string>
 struct App {
 	std::string appName;
-	int rating;
+	float rating;
 	int frequency;
-
-	App(std::string name, int rating) {
+	
+	App(std::string name = "Default", float rating = 0) {
 		appName = name;
 		this->rating = rating;
 		this->frequency = 1;

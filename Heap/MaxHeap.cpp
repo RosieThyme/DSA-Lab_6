@@ -3,7 +3,7 @@
 void MaxHeap::ResizeArray()
 {
 	int newAllocationSize = allocationSize * 2;
-	int* newArray = new int[newAllocationSize];
+	App* newArray = new App[newAllocationSize];
 	if (newArray)
 	{
 		for (int i = 0; i < allocationSize; i++)
@@ -24,6 +24,8 @@ MaxHeap::MaxHeap()
 	heapSize = 0;
 
 }
+
+// ------- have to figure out how to sort (by ratings? by frequency??? um idk??????)
 void MaxHeap::PercolateUp(int nodeIndex)
 {
 	while (nodeIndex > 0)
