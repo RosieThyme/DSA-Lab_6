@@ -1,10 +1,12 @@
 #include <iostream>
 #include <MaxHeap.h>
+#include <AVLTree.h>
 //#include "MaxHeap.h"
 
 int main()
 {
     MaxHeap heap;
+    AVLTree tree;
     std::cout <<"Heap has been created"<< std::endl;
     return 0;
 }

@@ -201,4 +201,5 @@ bool AVLTree::Contains(const std::string &key) {
             currentNode = currentNode->GetRight();
         }
     }
+    return false;
 }
