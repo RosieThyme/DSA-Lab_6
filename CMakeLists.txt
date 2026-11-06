@@ -4,14 +4,16 @@ project(MaxHeap)
 set(CMAKE_CXX_STANDARD 17)
 
 add_executable(MaxHeap
-		"AVLTree/AVLTree.cpp"
-		"AVLTree/AVLTree.h"
-		"AVLTree/AVLNode.h"
+		main.cpp
 )
 
 target_sources(MaxHeap
 	PRIVATE
-	main.cpp
+	"AVLTree/AVLTree.cpp"
+	"AVLTree/AVLTree.h"
+	"AVLTree/AVLNode.h"
+	"Heap/MaxHeap.cpp"
+	"Heap/MaxHeap.h"
 )
 
 target_link_libraries(MaxHeap
