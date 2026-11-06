@@ -101,6 +101,11 @@ void MaxHeap::Insert(const std::string &name, const float &rating)
 	PercolateUp(heapSize - 1);
 
 }
+void MaxHeap::Update()
+{
+
+
+}
 float MaxHeap::Delete()
 {
 	float maxValue = heapArray[0]->rating;
