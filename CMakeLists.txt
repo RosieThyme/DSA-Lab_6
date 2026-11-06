@@ -3,11 +3,11 @@ project(MaxHeap)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(MaxHeap
+add_executable(Vaca_Camilla_Noel_Hildline_Sagesse_Samuel
 		main.cpp
 )
 
-target_sources(MaxHeap
+target_sources(Vaca_Camilla_Noel_Hildline_Sagesse_Samuel
 	PRIVATE
 	"AVLTree/AVLTree.cpp"
 	"AVLTree/AVLTree.h"
@@ -16,7 +16,7 @@ target_sources(MaxHeap
 	"Heap/MaxHeap.h"
 )
 
-target_link_libraries(MaxHeap
+target_link_libraries(Vaca_Camilla_Noel_Hildline_Sagesse_Samuel
 	PRIVATE
 	Heap
 	AVLTree
