@@ -3,24 +3,26 @@ project(MaxHeap)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(MaxHeap
-		"AVL Tree/AVLTree.cpp"
-		"AVL Tree/AVLTree.h"
-		"AVL Tree/AVLNode.h"
+add_executable(Vaca_Camilla_Noel_Hildline_Sagesse_Samuel
+		main.cpp
 )
 
-target_sources(MaxHeap
+target_sources(Vaca_Camilla_Noel_Hildline_Sagesse_Samuel
 	PRIVATE
-	main.cpp
+	"AVLTree/AVLTree.cpp"
+	"AVLTree/AVLTree.h"
+	"AVLTree/AVLNode.h"
+	"Heap/MaxHeap.cpp"
+	"Heap/MaxHeap.h"
 )
 
-target_link_libraries(MaxHeap
+target_link_libraries(Vaca_Camilla_Noel_Hildline_Sagesse_Samuel
 	PRIVATE
 	Heap
+	AVLTree
 )
 
 add_library(Heap)
-
 target_sources(Heap
 	PRIVATE
 	Heap/MaxHeap.cpp
@@ -30,4 +32,16 @@ target_sources(Heap
 	Heap
 	FILES
 	Heap/MaxHeap.h
+)
+
+add_library(AVLTree)
+target_sources(AVLTree
+		PRIVATE
+		AVLTree/AVLTree.cpp
+		PUBLIC
+		FILE_SET HEADERS
+		BASE_DIRS
+		AVLTree
+		FILES
+		AVLTree/AVLTree.h
 )
