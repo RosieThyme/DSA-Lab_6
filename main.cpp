@@ -7,5 +7,4 @@ int main()
     MaxHeap heap;
     std::cout <<"Heap has been created"<< std::endl;
     return 0;
-
 }

@@ -3,7 +3,11 @@ project(MaxHeap)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(MaxHeap)
+add_executable(MaxHeap
+		"AVL Tree/AVLTree.cpp"
+		"AVL Tree/AVLTree.h"
+		"AVL Tree/AVLNode.h"
+)
 
 target_sources(MaxHeap
 	PRIVATE

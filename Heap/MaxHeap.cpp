@@ -25,21 +25,21 @@ MaxHeap::MaxHeap()
 
 }
 
-// ------- have to figure out how to sort (by ratings? by frequency??? um idk??????)
+// sorting by name
 void MaxHeap::PercolateUp(int nodeIndex)
 {
 	while (nodeIndex > 0)
 	{
 		int parentIndex = (nodeIndex - 1)/2;
 		//max-heap property check
-		if (heapArray[nodeIndex] <= heapArray[parentIndex])
+		if (heapArray[nodeIndex].appName <= heapArray[parentIndex].appName)
 		{
 			return;
 		}
 		else
 		{
 			// swap the values
-			int temp = heapArray[nodeIndex];
+			App temp = heapArray[nodeIndex];
 			heapArray[nodeIndex] = heapArray[parentIndex];
 			heapArray[parentIndex] = temp;
 			nodeIndex = parentIndex;
@@ -50,7 +50,8 @@ void MaxHeap::PercolateDown(int nodeIndex)
 {
 	// get child's index from array
 	int childIndex = 2 * nodeIndex + 1;
-	int value = heapArray[nodeIndex];
+	// sorting by name
+	std::string value = heapArray[nodeIndex].appName;
 	
 	while (childIndex < heapSize)
 	{
