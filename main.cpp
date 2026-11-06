@@ -6,7 +6,6 @@
 int main()
 {
     MaxHeap heap;
-    AVLTree tree;
     std::cout <<"Heap has been created"<< std::endl;
     return 0;
 }

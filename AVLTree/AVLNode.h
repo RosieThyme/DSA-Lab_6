@@ -1,6 +1,19 @@
 #ifndef MAXHEAP_AVLNODE_H
 #define MAXHEAP_AVLNODE_H
 #include <string>
+struct App {
+   std::string appName;
+   float rating;
+   int frequency;
+   int index;
+
+   App(std::string name = "Default", float rating = 0, int index=0) {
+      appName = name;
+      this->rating = rating;
+      this->frequency = 1;
+      this->index = -1;
+   }
+};
 
 class AVLNode {
 private:
