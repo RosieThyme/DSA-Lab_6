@@ -205,7 +205,6 @@ bool AVLTree::Contains(const std::string &key) {
 }
 
 void AVLTree::PrintTree() {
-    std::cout << std::endl;
     PrintHelper(root);
     std::cout << std::endl << "----------------------" << std::endl;
 }

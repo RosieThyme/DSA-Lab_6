@@ -1,8 +1,9 @@
+#include <iostream>
+#include <iomanip>
+#include <string>
 #include "MaxHeap.h"
 #include "../AVLTree/AVLTree.h"
 
-#include <iostream>
-#include <string>
 void MaxHeap::ResizeArray()
 {
 	int newAllocationSize = allocationSize * 2;
@@ -89,33 +90,37 @@ void MaxHeap::PercolateDown(int nodeIndex)
 }
 void MaxHeap::Insert(const std::string &name, const float &rating)
 {
-	heapSize++;
 	App* newApp = new App(name,rating);
 
-	// if not a duplicate, inserts into AVL tree
-	if (Contains(newApp->appName) == -1) {
+	// if already existing in heap, updates existing
+	if (Contains(newApp->appName) > -1) {
+		std::cout << "Must update existing app" << std::endl << "----------------------" << std::endl;
+	} else {
+		heapSize++;
+		// insert into AVL tree
 		tree->InsertKey(newApp->appName);
+
+		//resize the array
+		if (heapSize == allocationSize)
+		{
+			ResizeArray();
+		}
+		//Add rating to the end of the array
+		heapArray[heapSize] = newApp;
+		newApp->index = heapSize;
+
+		//percolate up from the last index
+		PercolateUp(heapSize);
+
+		PrintHeap();
+		tree->PrintTree();
 	}
-
-	//resize the value
-	if (heapSize == allocationSize)
-	{
-		ResizeArray();
-	}
-	//Add rating to the end of the array
-	heapArray[heapSize] = newApp;
-	newApp->index = heapSize;
-
-	//percolate up from the last index
-	PercolateUp(heapSize);
-
-	PrintHeap();
-	tree->PrintTree();
-
-
 }
-void MaxHeap::Update() {
-
+void MaxHeap::UpdateApp(const std::string &name, const float &rating) {
+	int appIndex = Contains(name);
+	heapArray[appIndex]->frequency++;
+	heapArray[appIndex]->rating = rating;
+	PercolateUp(appIndex);
 }
 float MaxHeap::Delete()
 {
@@ -133,13 +138,14 @@ return maxValue;
 void MaxHeap::PrintHeap() {
 	std::cout << std::endl;
 	for (int i = 0; i < heapSize + 1; i++) {
-		std::cout << heapArray[i]->appName << " | " << heapArray[i]->rating << std::endl;
+		std::cout << std::setw(20) << std::left << heapArray[i]->appName << heapArray[i]->rating << std::endl;
 	}
 }
 
 // returns the index of the requested key
+// if requested key doesn't exist, returns -1
 int MaxHeap::Contains(const std::string &name) {
-	for (int i = 0; i < heapSize; i++) {
+	for (int i = 0; i <= heapSize; i++) {
 		if (heapArray[i]->appName == name) {
 			return i;
 		}
@@ -152,6 +158,10 @@ void MaxHeap::GetAppInfo(const std::string &appName) {
 	if (appIndex > -1) {
 		std::cout << appName << " -- Rating: " << heapArray[appIndex]->rating << ", Frequency: " << heapArray[appIndex]->frequency << std::endl;
 	}
+}
+
+void MaxHeap::getTopKApps(const int &numberOfApps) {
+
 }
 
 MaxHeap::~MaxHeap()

@@ -15,11 +15,12 @@ public:
 	void PercolateUp(int nodeIndex);
 	void PercolateDown(int nodeIndex);
 	void Insert(const std::string &name, const float &rating);
-	void Update();
+	void UpdateApp(const std::string &name, const float &rating);
 	float Delete();
 	int Contains(const std::string &key);
 	void PrintHeap();
 	void GetAppInfo(const std::string &appName);
+	void getTopKApps(const int &numberOfApps);
 	~MaxHeap();
 };
 #endif
