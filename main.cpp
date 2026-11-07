@@ -22,6 +22,8 @@ int main()
     storeHeap.GetAppInfo("Among Us");
     storeHeap.PrintHeap();
 
+    storeHeap.getTopKApps(3);
+
 
     return 0;
 }

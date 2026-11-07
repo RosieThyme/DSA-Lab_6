@@ -50,22 +50,22 @@ void MaxHeap::PercolateUp(int nodeIndex)
 		}
 	}
 }
-void MaxHeap::PercolateDown(int nodeIndex)
+void MaxHeap::PercolateDown(int nodeIndex, App** &array)
 {
 	// get child's index from array
 	int childIndex = 2 * nodeIndex + 1;
 	// sorting by name
 	// std::string value = heapArray[nodeIndex].appName;
-	float value = heapArray[nodeIndex]->rating;
+	float value = array[nodeIndex]->rating;
 	while (childIndex < heapSize)
 	{
 		float maxValue = 0;
 		int maxIndex = -1;
 		for (int i = 0;i < 2 && i + childIndex < heapSize; i++)
 		{
-			if (heapArray[i + childIndex]->rating > maxValue)
+			if (array[i + childIndex]->rating > maxValue)
 			{
-				maxValue = heapArray[i + childIndex]->rating;
+				maxValue = array[i + childIndex]->rating;
 				maxIndex = i + childIndex;
 			}
 		}
@@ -77,9 +77,9 @@ void MaxHeap::PercolateDown(int nodeIndex)
 		else
 		{
 			//swap the values heapArray[nodeIndex] and heapArray[maxIndex]
-			float temp = heapArray[nodeIndex]->rating;
-			heapArray[nodeIndex]->rating = heapArray[maxIndex]->rating;
-			heapArray[maxIndex]->rating = temp;
+			float temp = array[nodeIndex]->rating;
+			array[nodeIndex]->rating = array[maxIndex]->rating;
+			array[maxIndex]->rating = temp;
 
 			//Continue loop from the max index node
 			nodeIndex = maxIndex;
@@ -130,14 +130,39 @@ float MaxHeap::Delete()
 	if(heapSize > 0)
 	{
 		heapArray[0]->rating = replaceValue;
-		PercolateDown(0);
+		PercolateDown(0, heapArray);
 	}
 return maxValue;
 }
 
+// returns array of pointers to apps
+App** MaxHeap::Heapsort() {
+	// copy old array into new array
+	auto newArray = new App*[heapSize+1];
+
+	for (int i = 0; i <= heapSize; i++) {
+		newArray[i] = heapArray[i];
+	}
+	// Heapify numbers array
+	for (int i = heapSize + 1 / 2 - 1; i >= 0; i--) {
+		PercolateDown(i, newArray);
+	}
+
+	for (int i = heapSize; i > 0; i--) {
+		// Swap numbers[0] and numbers[i]
+		App* temp = newArray[0];
+		newArray[0] = newArray[i];
+		newArray[i] = temp;
+
+		PercolateDown(i, newArray);
+	}
+
+	return newArray;
+}
+
 void MaxHeap::PrintHeap() {
 	std::cout << std::endl;
-	for (int i = 0; i < heapSize + 1; i++) {
+	for (int i = 0; i <= heapSize; i++) {
 		std::cout << std::setw(20) << std::left << heapArray[i]->appName << heapArray[i]->rating << std::endl;
 	}
 }
@@ -160,8 +185,18 @@ void MaxHeap::GetAppInfo(const std::string &appName) {
 	}
 }
 
-void MaxHeap::getTopKApps(const int &numberOfApps) {
 
+
+void MaxHeap::getTopKApps(const int &numberOfApps) {
+	if (numberOfApps > heapSize+1) {
+		throw std::runtime_error("More apps than are in the database");
+	}
+	App** sortedHeap = Heapsort();
+	std::cout << std::endl << "[";
+	for (int i = heapSize; i > heapSize - numberOfApps; i--) {
+		std::cout << "\"" << sortedHeap[i]->appName << "\" ";
+	}
+	std::cout << "]" << std::endl;
 }
 
 MaxHeap::~MaxHeap()
