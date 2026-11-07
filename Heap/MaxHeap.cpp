@@ -157,9 +157,6 @@ App** MaxHeap::Heapsort() {
 	}
 
 	std::cout << std::endl;
-	for (int i = 0; i <= heapSize; i++) {
-		std::cout << std::setw(20) << std::left << newArray[i]->appName << newArray[i]->rating << std::endl;
-	}
 
 	return newArray;
 }
@@ -198,7 +195,7 @@ void MaxHeap::getTopKApps(const int &numberOfApps) {
 	App** sortedHeap = Heapsort();
 
 	std::cout << std::endl << "[";
-	for (int i = 0; i <= heapSize; i++) {
+	for (int i = heapSize; i > heapSize - numberOfApps; i--) {
 		std::cout << "\"" << sortedHeap[i]->appName << "\" ";
 	}
 	std::cout << "]" << std::endl;
