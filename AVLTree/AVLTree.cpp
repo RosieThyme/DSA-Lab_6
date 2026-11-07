@@ -1,3 +1,4 @@
+#include <iostream>
 #include "AVLNode.h"
 #include "AVLTree.h"
 
@@ -64,26 +65,25 @@ void AVLTree::Rebalance(AVLNode* node) {
     }
 }
 
-bool AVLTree::InsertKey(const std::string &key) {
-    if (Contains(key)) {
-        return false;
+void AVLTree::InsertKey(const std::string &name) {
+    if (!Contains(name)) {
+        InsertNode(new AVLNode(name));
     }
-
-    InsertNode(new AVLNode(key));
-    return true;
 }
 
 void AVLTree::InsertNode(AVLNode* node) {
+    // static makes sure new heap is only created at the beginning
     // Check if tree is empty
     if (!root) {
         root = node;
+        // create heap when you have the 1st element
     }
     else {
         // Step 1 - do a regular binary search tree insert
         AVLNode* currentNode = root;
         while (currentNode) {
             // Choose to go left or right
-            if (node->GetKey() < currentNode->GetKey()) {
+            if (node->GetName() < currentNode->GetName()) {
                 // Go left. If left child is null, insert the new
                 // node here
                 if (currentNode->GetLeft() == nullptr) {
@@ -137,7 +137,7 @@ bool AVLTree::RemoveNode(AVLNode* nodeToRemove) {
         }
 
         // Copy the value from the node
-        nodeToRemove->SetKey(successorNode->GetKey());
+        nodeToRemove->SetKey(successorNode->GetName());
 
         // Recursively remove successor
         RemoveNode(successorNode);
@@ -191,10 +191,10 @@ bool AVLTree::Contains(const std::string &key) {
     AVLNode* currentNode = root;
 
     while (currentNode) {
-        if (currentNode->GetKey() == key) {
+        if (currentNode->GetName() == key) {
             return true;
         }
-        if (currentNode->GetKey() < key) {
+        if (currentNode->GetName() < key) {
             currentNode = currentNode->GetLeft();
         }
         else {
@@ -202,4 +202,20 @@ bool AVLTree::Contains(const std::string &key) {
         }
     }
     return false;
+}
+
+void AVLTree::PrintTree() {
+    std::cout << std::endl;
+    PrintHelper(root);
+    std::cout << std::endl << "----------------------" << std::endl;
+}
+
+void AVLTree::PrintHelper(AVLNode *node) {
+    // Order: Left, Root, Right
+    if (node == nullptr) {
+        return;
+    }
+    PrintHelper(node->GetLeft());
+    std::cout << node->GetName() << ", ";
+    PrintHelper(node->GetRight());
 }

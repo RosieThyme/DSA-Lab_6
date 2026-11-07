@@ -1,4 +1,7 @@
 #include "MaxHeap.h"
+#include "../AVLTree/AVLTree.h"
+
+#include <iostream>
 #include <string>
 void MaxHeap::ResizeArray()
 {
@@ -21,7 +24,7 @@ MaxHeap::MaxHeap()
 {
 	allocationSize = 1;
 	heapArray = new App*[allocationSize];
-	heapSize = 0;
+	heapSize = -1;
 
 }
 
@@ -32,7 +35,7 @@ void MaxHeap::PercolateUp(int nodeIndex)
 	{
 		int parentIndex = (nodeIndex - 1)/2;
 		//max-heap property check
-		if (heapArray[nodeIndex]->appName <= heapArray[parentIndex]->appName)
+		if (heapArray[nodeIndex]->rating <= heapArray[parentIndex]->rating)
 		{
 			return;
 		}
@@ -86,24 +89,32 @@ void MaxHeap::PercolateDown(int nodeIndex)
 }
 void MaxHeap::Insert(const std::string &name, const float &rating)
 {
-	//resize the value 
+	heapSize++;
+	App* newApp = new App(name,rating);
+
+	// if not a duplicate, inserts into AVL tree
+	if (Contains(newApp->appName) == -1) {
+		tree->InsertKey(newApp->appName);
+	}
+
+	//resize the value
 	if (heapSize == allocationSize)
 	{
 		ResizeArray();
 	}
-
 	//Add rating to the end of the array
-	App* newApp = new App(name,rating);
-	*(heapArray + heapSize) = newApp;
+	heapArray[heapSize] = newApp;
 	newApp->index = heapSize;
 
 	//percolate up from the last index
-	PercolateUp(heapSize - 1);
+	PercolateUp(heapSize);
+
+	PrintHeap();
+	tree->PrintTree();
+
 
 }
-void MaxHeap::Update()
-{
-
+void MaxHeap::Update() {
 
 }
 float MaxHeap::Delete()
@@ -118,6 +129,31 @@ float MaxHeap::Delete()
 	}
 return maxValue;
 }
+
+void MaxHeap::PrintHeap() {
+	std::cout << std::endl;
+	for (int i = 0; i < heapSize + 1; i++) {
+		std::cout << heapArray[i]->appName << " | " << heapArray[i]->rating << std::endl;
+	}
+}
+
+// returns the index of the requested key
+int MaxHeap::Contains(const std::string &name) {
+	for (int i = 0; i < heapSize; i++) {
+		if (heapArray[i]->appName == name) {
+			return i;
+		}
+	}
+	return -1;
+}
+
+void MaxHeap::GetAppInfo(const std::string &appName) {
+	int appIndex = Contains(appName);
+	if (appIndex > -1) {
+		std::cout << appName << " -- Rating: " << heapArray[appIndex]->rating << ", Frequency: " << heapArray[appIndex]->frequency << std::endl;
+	}
+}
+
 MaxHeap::~MaxHeap()
 {
 	delete[] heapArray;

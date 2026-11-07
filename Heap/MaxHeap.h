@@ -6,6 +6,7 @@
 class MaxHeap
 {
 	App** heapArray;
+	AVLTree* tree = new AVLTree();
 	int allocationSize;
 	int heapSize;
 	void ResizeArray();
@@ -16,6 +17,9 @@ public:
 	void Insert(const std::string &name, const float &rating);
 	void Update();
 	float Delete();
+	int Contains(const std::string &key);
+	void PrintHeap();
+	void GetAppInfo(const std::string &appName);
 	~MaxHeap();
 };
 #endif

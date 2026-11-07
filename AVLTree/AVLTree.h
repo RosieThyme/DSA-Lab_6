@@ -5,6 +5,7 @@
 
 class AVLTree {
     AVLNode* root;
+
 public:
     AVLTree() {
         root = nullptr;
@@ -13,10 +14,12 @@ public:
     void RotateRight(AVLNode* node);
     void RotateLeft(AVLNode* node);
     void Rebalance(AVLNode* node);
-    bool InsertKey(const std::string &key);
+    void InsertKey(const std::string &key);
     void InsertNode(AVLNode* node);
     bool RemoveNode(AVLNode* nodeToRemove);
     bool Contains(const std::string &key);
+    void PrintTree();
+    void PrintHelper(AVLNode* node);
 };
 
 

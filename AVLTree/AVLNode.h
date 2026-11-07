@@ -7,7 +7,7 @@ struct App {
    int frequency;
    int index;
 
-   App(std::string name = "Default", float rating = 0, int index=0) {
+   App(const std::string &name = "Default", const float &rating = 0.0) {
       appName = name;
       this->rating = rating;
       this->frequency = 1;
@@ -52,8 +52,8 @@ public:
       return leftHeight - rightHeight;
    }
 
-   // Returns this node's key
-   std::string GetKey() const {
+   // Returns this node's name
+   std::string GetName() const {
       return appName;
    }
 
