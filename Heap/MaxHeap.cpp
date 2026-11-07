@@ -174,13 +174,16 @@ void MaxHeap::getTopKApps(int k)
 }
 App* MaxHeap::Delete()
 {
+	//if the heap has nothing inside of it go back
 	if (heapSize == 0)
 	{
 		return nullptr;
 	}
+	//set the maxApp at the begining of the Array
 	App* maxApp = *heapArray;
 	App* replaceApp = *(heapArray + (heapSize - 1));
 	heapSize--;
+	//if the heapSize value is greater than 0, set the heapArray value as replaceApp
 	if(heapSize > 0)
 	{
 		*heapArray = replaceApp;

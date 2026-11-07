@@ -9,6 +9,7 @@ class MaxHeap
 	int allocationSize;
 	int heapSize;
 	void ResizeArray();
+	friend class AppStore;
 public:
 	MaxHeap();
 	void PercolateUp(int nodeIndex);
