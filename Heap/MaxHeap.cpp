@@ -1,5 +1,6 @@
 #include "MaxHeap.h"
 #include <string>
+#include <iostream>
 void MaxHeap::ResizeArray()
 {
 	int newAllocationSize = allocationSize * 2;
@@ -101,22 +102,91 @@ void MaxHeap::Insert(const std::string &name, const float &rating)
 	PercolateUp(heapSize - 1);
 
 }
-void MaxHeap::Update()
+void MaxHeap::Update(App* app, float newRating)
 {
+	if (!app)
+	{
+		return;
+	}
 
+	float oldRating = app->rating;
+	int appIndex = app->index;
+
+	if (newRating > oldRating)
+	{
+		PercolateUp(appIndex);
+	}
+	else if (newRating< oldRating)
+	{
+		PercolateDown(appIndex);
+	}
 
 }
-float MaxHeap::Delete()
+void MaxHeap::getTopKApps(int k)
 {
-	float maxValue = heapArray[0]->rating;
-	float replaceValue = heapArray[heapSize-1]->rating;
+	{
+		if (heapSize == 0 || k <= 0) return;
+
+		// Cap k to the actual number of elements available
+		if (k > heapSize) k = heapSize;
+
+		std::cout << "\n--- Displaying Top " << k << " Highest Rated Apps ---\n";
+
+		// 1. Create a shallow temporary array to hold the pointers
+		App** tempHeapArray = new App*[heapSize];
+
+		// Copy the pointers exactly as they are ordered using pointer arithmetic
+		for (int i = 0; i < heapSize; i++)
+		{
+			*(tempHeapArray + i) = *(heapArray + i);
+		}
+
+		// Save the original heap configuration variables
+		App** originalHeapArray = heapArray;
+		int originalHeapSize = heapSize;
+
+		// 2. Hijack the heap array pointer temporarily to use your existing Delete method
+		heapArray = tempHeapArray;
+
+		// 3. Extract and print the top K apps
+		for (int i = 0; i < k; i++)
+		{
+			App* topApp = Delete(); // This safely runs on tempHeapArray now
+			if (topApp != nullptr)
+			{
+				std::cout << (i + 1) << ". " << topApp->appName
+						  << " | Rating: " << topApp->rating << "\n";
+			}
+		}
+
+		// 4. Restore the original heap state
+		delete[] tempHeapArray; // Clean up our temporary pointer index array
+		heapArray = originalHeapArray;
+		heapSize = originalHeapSize;
+
+		// 5. CRUCIAL: Reset the correct heap_indices in the original array layout
+		for (int i = 0; i < heapSize; i++)
+		{
+			(*(heapArray + i))->index = i;
+		}
+	}
+
+}
+App* MaxHeap::Delete()
+{
+	if (heapSize == 0)
+	{
+		return nullptr;
+	}
+	App* maxApp = *heapArray;
+	App* replaceApp = *(heapArray + (heapSize - 1));
 	heapSize--;
 	if(heapSize > 0)
 	{
-		heapArray[0]->rating = replaceValue;
+		*heapArray = replaceApp;
 		PercolateDown(0);
 	}
-return maxValue;
+return maxApp;
 }
 MaxHeap::~MaxHeap()
 {

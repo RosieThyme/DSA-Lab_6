@@ -14,8 +14,9 @@ public:
 	void PercolateUp(int nodeIndex);
 	void PercolateDown(int nodeIndex);
 	void Insert(const std::string &name, const float &rating);
-	void Update();
-	float Delete();
+	void Update(App* app, float newRating);
+	void getTopKApps(int k);
+	App* Delete();
 	~MaxHeap();
 };
 #endif
