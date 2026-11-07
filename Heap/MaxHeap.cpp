@@ -59,7 +59,7 @@ void MaxHeap::PercolateDown(int nodeIndex, App** &array)
 	float value = array[nodeIndex]->rating;
 	while (childIndex < heapSize)
 	{
-		float maxValue = 0;
+		float maxValue = value;
 		int maxIndex = -1;
 		for (int i = 0;i < 2 && i + childIndex < heapSize; i++)
 		{
@@ -77,9 +77,9 @@ void MaxHeap::PercolateDown(int nodeIndex, App** &array)
 		else
 		{
 			//swap the values heapArray[nodeIndex] and heapArray[maxIndex]
-			float temp = array[nodeIndex]->rating;
-			array[nodeIndex]->rating = array[maxIndex]->rating;
-			array[maxIndex]->rating = temp;
+			App* temp = array[nodeIndex];
+			array[nodeIndex] = array[maxIndex];
+			array[maxIndex] = temp;
 
 			//Continue loop from the max index node
 			nodeIndex = maxIndex;
@@ -94,7 +94,7 @@ void MaxHeap::Insert(const std::string &name, const float &rating)
 
 	// if already existing in heap, updates existing
 	if (Contains(newApp->appName) > -1) {
-		std::cout << "Must update existing app" << std::endl << "----------------------" << std::endl;
+		std::cout << "Must update existing app" << std::endl;
 	} else {
 		heapSize++;
 		// insert into AVL tree
@@ -111,9 +111,7 @@ void MaxHeap::Insert(const std::string &name, const float &rating)
 
 		//percolate up from the last index
 		PercolateUp(heapSize);
-
-		PrintHeap();
-		tree->PrintTree();
+		std::cout << "Inserted " << name << " with rating " << rating << std::endl;
 	}
 }
 void MaxHeap::UpdateApp(const std::string &name, const float &rating) {
@@ -143,8 +141,9 @@ App** MaxHeap::Heapsort() {
 	for (int i = 0; i <= heapSize; i++) {
 		newArray[i] = heapArray[i];
 	}
+	// -------------------------------------------
 	// Heapify numbers array
-	for (int i = heapSize + 1 / 2 - 1; i >= 0; i--) {
+	for (int i = ((heapSize + 1) / 2 )- 1; i >= 0; i--) {
 		PercolateDown(i, newArray);
 	}
 
@@ -155,6 +154,11 @@ App** MaxHeap::Heapsort() {
 		newArray[i] = temp;
 
 		PercolateDown(i, newArray);
+	}
+
+	std::cout << std::endl;
+	for (int i = 0; i <= heapSize; i++) {
+		std::cout << std::setw(20) << std::left << newArray[i]->appName << newArray[i]->rating << std::endl;
 	}
 
 	return newArray;
@@ -192,10 +196,7 @@ void MaxHeap::getTopKApps(const int &numberOfApps) {
 		throw std::runtime_error("More apps than are in the database");
 	}
 	App** sortedHeap = Heapsort();
-	std::cout << std::endl << "[";
-	for (int i = heapSize; i > heapSize - numberOfApps; i--) {
-		std::cout << "\"" << sortedHeap[i]->appName << "\" ";
-	}
+
 	std::cout << "]" << std::endl;
 }
 

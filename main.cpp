@@ -11,7 +11,7 @@ int main()
     storeHeap.Insert("Flappy Bird", 3.2);
     storeHeap.Insert("Angry Birds", 4.5);
     storeHeap.Insert("Candy Crush", 4.8);
-    // will show a message saying app must be updated (already exists)
+    // will not be added to the heap/tree, freq will update
     storeHeap.Insert("Candy Crush", 4.8);
     storeHeap.Insert("Among Us", 4.1);
     storeHeap.Insert("Wordle", 4.6);
@@ -20,9 +20,8 @@ int main()
     storeHeap.GetAppInfo("Among Us");
     storeHeap.UpdateApp("Among Us", 4.9);
     storeHeap.GetAppInfo("Among Us");
-    storeHeap.PrintHeap();
 
-    storeHeap.getTopKApps(3);
+    storeHeap.getTopKApps(7);
 
 
     return 0;
