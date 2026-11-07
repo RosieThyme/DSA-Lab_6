@@ -197,6 +197,10 @@ void MaxHeap::getTopKApps(const int &numberOfApps) {
 	}
 	App** sortedHeap = Heapsort();
 
+	std::cout << std::endl << "[";
+	for (int i = 0; i <= heapSize; i++) {
+		std::cout << "\"" << sortedHeap[i]->appName << "\" ";
+	}
 	std::cout << "]" << std::endl;
 }
 
